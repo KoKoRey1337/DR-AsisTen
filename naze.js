@@ -53,6 +53,7 @@ const { imageToWebp, videoToWebp, writeExif } = require('./lib/exif');
 const { rdGame, iGame, tGame, gameSlot, gameCasinoSolo, gameSamgongSolo, gameMerampok, gameBegal, daily, buy, setLimit, addLimit, addUang, setUang, transfer } = require('./lib/game');
 const { pinterest, wallpaper, remini, wikimedia, hitamkan, yanzGpt, mediafireDl, ringtone, styletext, instagramDl, tiktokDl, facebookDl, instaStalk, telegramStalk, tiktokStalk, genshinStalk, instaStory, bk9Ai, spotifyDl, ytMp4, ytMp3, NvlGroup, quotedLyo, youSearch, gptLogic, savetube, simi, geminiAi } = require('./lib/screaper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, convertTimestampToDate, getAllHTML, tarBackup } = require('./lib/function');
+const { addDomainToCheck, getDomains } = require('./utils/nawalaChecker');
 
 module.exports = naze = async (naze, m, msg, store, groupCache) => {
 	try {
@@ -713,6 +714,20 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 				} else m.reply('User tidak terdaftar di database!')
 			}
 			break
+
+			case 'ceknawala': {
+    if (!args[0]) return reply('Contoh penggunaan:\n.ceknawala domain.com');
+    const domain = args[0].toLowerCase();
+
+    const added = addDomainToCheck(domain);
+    if (added) {
+        reply(`✅ Domain *${domain}* berhasil ditambahkan ke daftar pengecekan nawala.\nBot akan mengecek domain ini setiap 10 menit secara otomatis.`);
+    } else {
+        reply(`ℹ️ Domain *${domain}* sudah ada dalam daftar.`);
+    }
+}
+break;
+		       
 			case 'mute': case 'unmute': {
 				if (!isCreator) return m.reply(mess.owner)
 				if (!m.isGroup) return m.reply(mess.group)
