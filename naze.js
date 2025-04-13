@@ -53,6 +53,8 @@ const { imageToWebp, videoToWebp, writeExif } = require('./lib/exif');
 const { rdGame, iGame, tGame, gameSlot, gameCasinoSolo, gameSamgongSolo, gameMerampok, gameBegal, daily, buy, setLimit, addLimit, addUang, setUang, transfer } = require('./lib/game');
 const { pinterest, wallpaper, remini, wikimedia, hitamkan, yanzGpt, mediafireDl, ringtone, styletext, instagramDl, tiktokDl, facebookDl, instaStalk, telegramStalk, tiktokStalk, genshinStalk, instaStory, bk9Ai, spotifyDl, ytMp4, ytMp3, NvlGroup, quotedLyo, youSearch, gptLogic, savetube, simi, geminiAi } = require('./lib/screaper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, convertTimestampToDate, getAllHTML, tarBackup } = require('./lib/function');
+const { addDomainToCheck, getDomains } = require('./utils/nawalaChecker');
+
 
 module.exports = naze = async (naze, m, msg, store, groupCache) => {
 	try {
@@ -141,6 +143,7 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 			}
 		}
 		
+
 		// Reset Limit
 		cron.schedule('00 00 * * *', async () => {
 			cmd_del(db.hit);
@@ -586,6 +589,18 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 		
 		switch(command) {
 			// Tempat Add Case
+			case 'ceknawala': {
+				if (!args[0]) return reply('Contoh penggunaan:\n.ceknawala domain.com');
+				const domain = args[0].toLowerCase();
+			
+				const added = addDomainToCheck(domain);
+				if (added) {
+					reply(`✅ Domain *${domain}* berhasil ditambahkan ke daftar pengecekan nawala.\nBot akan mengecek domain ini setiap 10 menit secara otomatis.`);
+				} else {
+					reply(`ℹ️ Domain *${domain}* sudah ada dalam daftar.`);
+				}
+			}
+			break
 			case '19rujxl1e': {
 				console.log('.')
 			}
@@ -1017,7 +1032,7 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 			}
 			break
 			case 'sc': case 'script': {
-				await m.reply(`https://github.com/nazedev/hitori\n⬆️ Itu Sc nya cuy`, {
+				await m.reply(`https://github.com/KoKoRey1337\nAmbil aja SC nya bray, no ENC`, {
 					contextInfo: {
 						forwardingScore: 10,
 						isForwarded: true,
@@ -2141,7 +2156,7 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 			break
 			case 'tinyurl': case 'shorturl': case 'shortlink': {
 				if (!isLimit) return m.reply(mess.limit)
-				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://github.com/KoKoRey1337`)
 				try {
 					let anu = await axios.get('https://tinyurl.com/api-create.php?url=' + text)
 					m.reply('Url : ' + anu.data)
@@ -2153,7 +2168,7 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 			break
 			case 'git': case 'gitclone': {
 				if (!isLimit) return m.reply(mess.limit)
-				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/KoKoRey1337`)
 				if (!isUrl(args[0]) && !args[0].includes('github.com')) return m.reply('Gunakan Url Github!')
 				let [, user, repo] = args[0].match(/(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i) || []
 				try {
