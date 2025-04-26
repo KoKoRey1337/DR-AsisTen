@@ -55,7 +55,7 @@ pkg install nodejs
 pkg install ffmpeg
 pkg install imagemagick
 git clone https://github.com/KoKoRey1337/DR-AsisTen/
-cd hitori
+cd DR-AsisTen
 npm install
 ```
 
